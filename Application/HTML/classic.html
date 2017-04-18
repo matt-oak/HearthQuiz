@@ -1,6 +1,5 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js" integrity="sha384-3ceskX3iaEnIogmQchP8opvBy3Mi7Ce34nWjpBIwVTHfGYWQS9jwHDVRnpKKHJg7" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -13,14 +12,30 @@
         <h1 id="app_name">HearthQuiz</h1>
     </div>
 
-    <div class="container-fluid">
+    <div id="game_options" class="container-fluid">
         <div class="well">
             <div class="btn-group">
                 <a href="homepage" class="btn btn-primary" role="button">Home</a>
                 <a href="classic" class="btn btn-primary" role="button">Classic</a>
                 <a href="ungoro" class="btn btn-primary" role="button">Un'Goro</a>
-                <!-- Add more buttons for different card sets here -->
             </div>
         </div>
+    </div>
+
+    <div id="game" class="container-fluid">
+    	<script>
+    	$.ajax({
+        	type: "GET",
+        	url: "/classic",
+        	success: function(data) {
+            	console.log(data);
+            	console.log("worked");
+        	},
+        	error: function(error) {
+            	console.log(error);
+            	console.log("didn't work");
+        	}
+    		});
+    	</script>
     </div>
 </body>

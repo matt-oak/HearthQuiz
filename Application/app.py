@@ -1,20 +1,38 @@
+from  tornado.escape import json_decode
+from sqlalchemy import create_engine
+from helpers import *
+import pandas as pd
 import tornado.ioloop
 import tornado.web
-from  tornado.escape import json_decode
+import psycopg2
+import unirest
+import random
 
-#Handler for main (index) page
-class MainHandler(tornado.web.RequestHandler):
+#Handler for homepage
+class HomeHandler(tornado.web.RequestHandler):
     def get(self):
-        #URL to main (index) page
         self.render("./html/homepage.html")
+
+#Handler for Classic-game page
+class ClassicHandler(tornado.web.RequestHandler):
+  def get(self):
+        self.render("./html/classic.html")
+        engine = create_engine("postgresql://test:pass@localhost:5432/hearthquiz")
+        query = "SELECT * FROM classic"
+        dataframe = pd.read_sql_query(query, con = engine)
+        rand_entry = random.randint(0, len(dataframe.index))
+        answer = dataframe.loc[rand_entry]
+        dic = answer.to_dict()
+        print dic
+        self.write(dic)
 
 def make_app():
     return tornado.web.Application([
-        (r"/", MainHandler),
+        (r"/", HomeHandler),
+        (r"/classic", ClassicHandler),
         (r"/js/(.*)",tornado.web.StaticFileHandler, {"path": "./static/js"},),
         (r"/css/(.*)",tornado.web.StaticFileHandler, {"path": "./static/css"},),
         (r"/img/(.*)",tornado.web.StaticFileHandler, {"path": "./static/img"},),
-        #(r"/dropdown-fill/(.*)", DropdownFillHandler)
     ])
 
 if __name__ == "__main__":
