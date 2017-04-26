@@ -12,7 +12,7 @@ def rip():
 		#Retrieve data from API endpoint
 		response = unirest.get("https://omgvamp-hearthstone-v1.p.mashape.com/cards/sets/Classic",
 			headers={
-					"X-Mashape-Key": "KEY"
+					"X-Mashape-Key": "TRI1WfO8dumshQd3krFUgj9bRf2ep1x76TvjsnH28h6bhADgnw"
 			})
 		#Initialize Pandas dataframe
 		cols = ["name", "class", "rarity", "cost", "attack", "health"]

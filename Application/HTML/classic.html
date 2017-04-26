@@ -22,20 +22,68 @@
         </div>
     </div>
 
+    <div id="game-container" class="container-fluid">
+    	<div id="card-name" class="container-fluid">
+    		<h2>Card Name: </h2>
+    	</div>
+    	<div id="class-container" class="container-fluid">
+    		<div class="form-group">
+    			<label for="mana">Class:</label>
+    			<input type="text" class="form-control" id="class">
+    		</div>
+    	</div>
+    	<div id="mana-container" class="container-fluid">
+    		<div class="form-group">
+    			<label for="mana">Mana Cost:</label>
+    			<input type="text" class="form-control" id="mana">
+    		</div>
+    	</div>
+    	<div id="health-container" class="container-fluid">
+    		<div class="form-group">
+    			<label for="health">Health:</label>
+    			<input type="text" class="form-control" id="health">
+    		</div>
+    	</div>
+    	<div id="attack-container" class="container-fluid">
+    		<div class="form-group">
+    			<label for="attack">Attack:</label>
+    			<input type="text" class="form-control" id="attack">
+    		</div>
+    	</div>
+    	<div id="rarity-container" class="container-fluid">
+    		<div class="form-group">
+    			<label for="mana">Rarity:</label>
+    			<input type="text" class="form-control" id="rarity">
+    		</div>
+    	</div>
+    	<button id="play-button" type="button" class="btn btn-primary">Play Game</button>
+    </div>
+
     <div id="game" class="container-fluid">
     	<script>
     	$.ajax({
         	type: "GET",
         	url: "/classic",
         	success: function(data) {
-            	console.log(data);
-            	console.log("worked");
+            	console.log("classic page loaded");
         	},
         	error: function(error) {
             	console.log(error);
-            	console.log("didn't work");
         	}
+    	});
+
+    	$('#play-button').click(function() {
+    		$.ajax({
+    			type: "GET",
+    			url: "/play-classic",
+    			success: function(data) {
+    				console.log(data);
+    			},
+    			error: function(error) {
+    				console.log(error);
+    			}
     		});
+    	});
     	</script>
     </div>
 </body>

@@ -1,6 +1,5 @@
 from  tornado.escape import json_decode
 from sqlalchemy import create_engine
-from helpers import *
 import pandas as pd
 import tornado.ioloop
 import tornado.web
@@ -17,12 +16,17 @@ class HomeHandler(tornado.web.RequestHandler):
 class ClassicHandler(tornado.web.RequestHandler):
   def get(self):
         self.render("./html/classic.html")
+
+class PlayClassicHandler(tornado.web.RequestHandler):
+    def get(self):
         engine = create_engine("postgresql://test:pass@localhost:5432/hearthquiz")
         query = "SELECT * FROM classic"
         dataframe = pd.read_sql_query(query, con = engine)
         rand_entry = random.randint(0, len(dataframe.index))
         answer = dataframe.loc[rand_entry]
         dic = answer.to_dict()
+        dic.pop("index")
+        dic.pop("id")
         print dic
         self.write(dic)
 
@@ -30,6 +34,7 @@ def make_app():
     return tornado.web.Application([
         (r"/", HomeHandler),
         (r"/classic", ClassicHandler),
+        (r"/play-classic", PlayClassicHandler),
         (r"/js/(.*)",tornado.web.StaticFileHandler, {"path": "./static/js"},),
         (r"/css/(.*)",tornado.web.StaticFileHandler, {"path": "./static/css"},),
         (r"/img/(.*)",tornado.web.StaticFileHandler, {"path": "./static/img"},),
